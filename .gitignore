@@ -1,0 +1,33 @@
+# Spark
+spark-warehouse/
+derby.log
+metastore_db/
+
+# Logs
+logs/
+*.log
+
+# Downloaded dependencies
+spark-*.tgz
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Local environment
+.env
+
+# macOS
+.DS_Store
+
+# Data files
+data/
+
+# State files
+state.json

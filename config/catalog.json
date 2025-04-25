@@ -1,0 +1,36 @@
+{
+    "selected_streams": {
+        "olake_orders": [
+            {
+                "partition_regex": "",
+                "split_column": "",
+                "stream_name": "orders"
+            }
+        ]
+    },
+    "streams": [
+        {
+            "stream": {
+                "available_cursor_fields": [],
+                "name": "orders",
+                "namespace": "olake_orders",
+                "source_defined_primary_key": ["id"],
+                "supported_sync_modes": ["full_refresh", "cdc"],
+                "sync_mode": "cdc",
+                "type_schema": {
+                    "properties": {
+                        "_cdc_deleted_at": {"type": ["timestamp", "null"]},
+                        "_olake_id": {"type": ["string", "null"]},
+                        "_olake_insert_time": {"type": ["integer", "null"]},
+                        "customer_name": {"type": ["string", "null"]},
+                        "id": {"type": ["integer"]},
+                        "order_date": {"type": ["timestamp", "null"]},
+                        "product_name": {"type": ["string", "null"]},
+                        "quantity": {"type": ["integer", "null"]}
+                    }
+                }
+            }
+        }
+    ],
+    "type": "CATALOG"
+}
