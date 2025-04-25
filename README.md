@@ -2,22 +2,6 @@
 
 This project demonstrates data synchronization from MySQL to Apache Iceberg using OLake, with querying capabilities via Apache Spark.
 
-## Prerequisites
-- Docker and Docker Compose v2.x
-- OLake CLI (latest version)
-- ~2GB of free disk space
-- 4GB+ RAM recommended
-
-## Data Overview
-The pipeline syncs order data with the following schema:
-- `order_id`: Unique identifier for each order
-- `customer_name`: Name of the customer
-- `product_name`: Product being ordered
-- `quantity`: Number of items ordered
-- `price`: Price per unit
-- `order_date`: Date and time of the order
-- `status`: Order status (pending/completed/shipped)
-
 ## Architecture
 - MySQL: Source database containing orders data
 - OLake: Data synchronization tool
@@ -25,20 +9,6 @@ The pipeline syncs order data with the following schema:
 - Apache Iceberg: Table format
 - Apache Spark: Query engine
 
-## Project Structure
-```
-olake-pipeline/
-├── config/                # Configuration files
-│   ├── config.json        # OLake MySQL configuration
-│   ├── catalog.json       # Iceberg catalog configuration
-│   └── writer.json        # Data writer configuration
-├── sql/                   # SQL queries
-│   └── queries.sql        # Sample Spark SQL queries
-├── scripts/               # Shell scripts
-│   ├── run-spark-sql.sh   # Spark SQL execution script
-│   └── submit_query.sh    # Query submission script
-└── docker-compose.yml     # Infrastructure setup
-```
 ## Setup Instructions
 
 ### 1. Start the Infrastructure
@@ -46,30 +16,15 @@ olake-pipeline/
 docker-compose up -d
 ```
 This starts:
-- MySQL (port 3306) with existing orders data
+- MySQL (port 3306)
 - MinIO (port 9000, console on 9001)
 - Iceberg REST Catalog (port 8181)
 
 ### 2. Data Synchronization
-Run the following OLake commands to discover and sync data:
-
-```bash
-# Discover MySQL schema
-olake discover \
-  --config config.json \
-  --catalog catalog.json \
-  --writer writer.json
-
-# Sync data to Iceberg format
-olake sync \
-  --config config.json \
-  --catalog catalog.json \
-  --writer writer.json
-```
-
-Current sync status: 41 records synced successfully
-
-![OLake Sync Output](images/olake_sync_output.png)
+OLake has been configured to:
+- Discover MySQL schema
+- Sync data to Parquet format
+- Current sync status: 41 records synced successfully
 
 ### 3. Query with Spark
 To query the synced data using Spark SQL:
@@ -92,18 +47,6 @@ spark-shell --packages org.apache.iceberg:iceberg-spark-runtime-3.4_2.12:1.4.2 \
 // Read the orders table
 spark.sql("SELECT * FROM demo.olake_orders.orders").show()
 ```
-
-### Query Results
-Here are some example query results from our Spark SQL queries:
-
-#### All Orders Query
-![All Orders Query Result](images/all_orders_query.png)
-
-#### Orders by Product Query
-![Orders by Product Query Result](images/orders_by_product.png)
-
-#### Spark UI
-![Spark UI Jobs](images/spark_ui_jobs.png)
 
 ## Challenges Faced
 1. Data type mapping between MySQL and Iceberg
