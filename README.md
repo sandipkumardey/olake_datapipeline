@@ -48,6 +48,25 @@ spark-shell --packages org.apache.iceberg:iceberg-spark-runtime-3.4_2.12:1.4.2 \
 spark.sql("SELECT * FROM demo.olake_orders.orders").show()
 ```
 
+### Query Results
+Here are some example query results from our Spark SQL queries:
+
+#### Records
+![All Data Records](images/records.png)
+
+#### Docker
+![Docker_MySQL Setup](images/docker.png)
+![Running Containers](images/containers.png)
+
+#### All Orders Query
+![All Orders Query Result](images/all_orders_query.png)
+
+#### Orders by Product Query
+![Orders by Product Query Result](images/orders_by_product.png)
+
+#### Spark UI
+![Spark UI Jobs](images/spark_ui_jobs.png)
+
 ## Challenges Faced
 1. Data type mapping between MySQL and Iceberg
 2. Configuring proper S3 credentials for MinIO access
