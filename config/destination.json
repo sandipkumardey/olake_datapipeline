@@ -1,0 +1,8 @@
+{
+  "type": "ICEBERG",
+  "writer": {
+    "catalog_type": "rest",
+    "rest_endpoint": "http://iceberg-rest:8181",
+    "iceberg_db": "olake_orders"
+  }
+}
