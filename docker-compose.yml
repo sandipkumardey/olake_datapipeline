@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.3
+    container_name: olake-mysql-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: olake_orders
+      MYSQL_USER: olake_user
+      MYSQL_PASSWORD: olake_pass
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - olake-network
+
+  iceberg-rest:
+    image: tabulario/iceberg-rest:latest
+    container_name: iceberg-rest-catalog
+    ports:
+      - "8181:8181"
+    environment:
+      - CATALOG_WAREHOUSE=/warehouse
+      - CATALOG_IO__IMPL=org.apache.hadoop.fs.LocalFileSystem
+    volumes:
+      - ./warehouse:/warehouse
+    networks:
+      - olake-network
+
+  spark:
+    image: spark-iceberg:simple
+    container_name: spark-iceberg
+    ports:
+      - "4040:4040"
+    volumes:
+      - ./:/workspace
+      - ./warehouse:/warehouse
+    environment:
+      - SPARK_LOCAL_IP=0.0.0.0
+    depends_on:
+      - iceberg-rest
+    networks:
+      - olake-network
+
+  olake:
+    image: olakego/source-mysql:latest
+    container_name: olake-pipeline
+    volumes:
+      - ./config:/mnt/config
+      - ./warehouse:/warehouse
+    environment:
+      - OLAKE_CONFIG_DIR=/mnt/config
+    depends_on:
+      - mysql
+      - iceberg-rest
+    networks:
+      - olake-network
+
+networks:
+  olake-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+  warehouse_data:
