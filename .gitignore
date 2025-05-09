@@ -71,3 +71,19 @@ config/
 
 # State files
 state.json
+
+# Backup files
+*.bak
+*.backup
+
+# Temporary files
+tmp/
+temp/
+
+# Iceberg metadata
+.metadata/
+.metadata.db
+
+# OLake specific
+olake_*.log
+olake_*.state

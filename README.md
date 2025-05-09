@@ -9,6 +9,9 @@ A modern data pipeline that demonstrates real-time data synchronization from MyS
 - Parquet file storage for efficient querying
 - Apache Spark integration for data analysis
 - Docker-based development environment
+- REST Catalog integration for Iceberg tables
+- OLake's discover and sync capabilities
+- Automated schema discovery and synchronization
 
 ## Prerequisites
 
@@ -31,8 +34,8 @@ docker compose up -d
 
 3. The following services will be available:
 - MySQL Database: localhost:3307
-- MinIO (Object Storage): localhost:9000
 - Spark UI: localhost:4040
+- REST Catalog: localhost:8181
 
 ## Project Structure
 
@@ -41,7 +44,8 @@ olake-pipeline/
 ├── config/                 # Configuration files
 │   ├── source.json        # Source database configuration
 │   ├── streams.json       # Stream configuration
-│   └── destination.json   # Destination configuration
+│   ├── destination.json   # Destination configuration
+│   └── catalog.json      # REST Catalog configuration
 ├── scripts/               # Utility scripts
 ├── warehouse/            # Data warehouse directory
 └── docker-compose.yml    # Docker services configuration
@@ -52,17 +56,27 @@ olake-pipeline/
 1. MySQL Database (Source)
    - Stores the original data
    - Configured for OLake integration
+   - Supports real-time data synchronization
 
 2. OLake Integration
-   - Real-time data synchronization
+   - Schema discovery using `discover` command
+   - Data synchronization using `sync` command
    - Automatic schema discovery
    - Transforms data to Iceberg format
    - Stores data in Parquet files
+   - Integrates with REST Catalog
 
-3. Apache Spark
+3. Apache Iceberg
+   - Manages table metadata
+   - Provides schema evolution
+   - Supports time travel queries
+   - REST Catalog integration
+
+4. Apache Spark
    - Reads Parquet files
    - Performs data analysis
    - Provides SQL querying capabilities
+   - Supports complex analytics
 
 ## Usage
 
@@ -80,11 +94,37 @@ docker run -d --name olake-sync \
 docker exec -it spark-iceberg spark-submit /workspace/query_orders.py
 ```
 
+## Current Status
+
+The pipeline is fully functional with the following features implemented:
+
+1. **Data Synchronization**
+   - MySQL to Iceberg sync working via OLake
+   - Schema discovery using OLake's discover command
+   - Real-time data synchronization using OLake's sync command
+
+2. **Data Storage**
+   - Parquet file format
+   - Iceberg table format
+   - REST Catalog integration
+
+3. **Data Analysis**
+   - Spark SQL queries working
+   - Complex aggregations supported
+   - Real-time data access
+
+4. **Sample Data**
+   - 190 orders in the system
+   - Multiple status types (COMPLETED, PENDING, SHIPPED)
+   - Various total amounts
+
 ## Development
 
 - The project uses Docker for consistent development environments
 - Configuration files are mounted as volumes
 - Data is persisted in the warehouse directory
+- REST Catalog provides table management
+- OLake ensures real-time data synchronization
 
 ## Contributing
 
