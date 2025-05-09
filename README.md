@@ -2,6 +2,8 @@
 
 A modern data pipeline that demonstrates real-time data synchronization from MySQL to Apache Iceberg using OLake's Integration with Rest Catalog, with Apache Spark for data analysis.
 
+![Image](https://github.com/user-attachments/assets/7d715b0b-3db3-4074-8fb7-153d454bbc95)
+
 ## Features
 
 - Real-time data synchronization using OLake
@@ -52,6 +54,8 @@ olake-pipeline/
 ```
 
 ## Data Flow
+
+![Image](https://github.com/user-attachments/assets/15257391-9659-496d-b236-883d2257fa60)
 
 1. MySQL Database (Source)
    - Stores the original data
