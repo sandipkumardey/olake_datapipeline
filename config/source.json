@@ -1,7 +1,7 @@
 {
     "hosts": "olake-mysql-db",
-    "username": "olake_user",
-    "password": "olake_pass",
+    "username": "root",
+    "password": "rootpassword",
     "database": "olake_orders",
     "port": 3306,
     "tls_skip_verify": true,
@@ -9,5 +9,7 @@
         "initial_wait_time": 10
     },
     "default_mode": "cdc",
-    "max_threads": 5
+    "max_threads": 5,
+    "backoff_retry_count": 4
 }
+  

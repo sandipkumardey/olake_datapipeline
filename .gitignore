@@ -64,7 +64,11 @@ logs/
 Thumbs.db
 
 # Project specific
-config/
+config/*
+!config/catalog.json
+!config/destination.json
+!config/source.json
+!config/streams.json
 *.json
 !package.json
 !tsconfig.json

@@ -1,36 +1,40 @@
 {
-    "selected_streams": {
-        "olake_orders": [
-            {
-                "partition_regex": "",
-                "split_column": "",
-                "stream_name": "orders"
-            }
-        ]
-    },
-    "streams": [
-        {
-            "stream": {
-                "available_cursor_fields": [],
-                "name": "orders",
-                "namespace": "olake_orders",
-                "source_defined_primary_key": ["id"],
-                "supported_sync_modes": ["full_refresh", "cdc"],
-                "sync_mode": "cdc",
-                "type_schema": {
-                    "properties": {
-                        "_cdc_deleted_at": {"type": ["timestamp", "null"]},
-                        "_olake_id": {"type": ["string", "null"]},
-                        "_olake_insert_time": {"type": ["integer", "null"]},
-                        "customer_name": {"type": ["string", "null"]},
-                        "id": {"type": ["integer"]},
-                        "order_date": {"type": ["timestamp", "null"]},
-                        "product_name": {"type": ["string", "null"]},
-                        "quantity": {"type": ["integer", "null"]}
-                    }
-                }
-            }
+  "type": "rest",
+  "uri": "http://iceberg-rest-catalog:8181",
+  "warehouse": "/tmp/warehouse",
+  "selected_streams": {
+    "olake_orders": [
+      {
+        "partition_regex": "",
+        "split_column": "",
+        "stream_name": "orders"
+      }
+    ]
+  },
+  "streams": [
+    {
+      "stream": {
+        "available_cursor_fields": [],
+        "name": "orders",
+        "namespace": "olake_orders",
+        "source_defined_primary_key": ["order_id"],
+        "supported_sync_modes": ["full_refresh", "cdc"],
+        "sync_mode": "full_refresh",
+        "type_schema": {
+          "properties": {
+            "_cdc_timestamp": {"type": ["integer", "null"]},
+            "_olake_id": {"type": ["string", "null"]},
+            "_olake_timestamp": {"type": ["integer", "null"]},
+            "_op_type": {"type": ["null", "string"]},
+            "order_id": {"type": ["integer"]},
+            "customer_name": {"type": ["string", "null"]},
+            "product_name": {"type": ["string", "null"]},
+            "quantity": {"type": ["integer", "null"]},
+            "order_date": {"type": ["date", "null"]},
+            "total_amount": {"type": ["number", "null"]}
+          }
         }
-    ],
-    "type": "CATALOG"
+      }
+    }
+  ]
 }

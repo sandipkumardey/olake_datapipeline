@@ -1,8 +1,7 @@
 {
-  "type": "ICEBERG",
+  "type": "PARQUET",
   "writer": {
-    "catalog_type": "rest",
-    "rest_endpoint": "http://iceberg-rest:8181",
-    "iceberg_db": "olake_orders"
+    "normalization": true,
+    "local_path": "/warehouse/olake_orders"
   }
 }
